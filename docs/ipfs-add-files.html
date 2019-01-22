@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Horizontal-Systems How to Add Files to IPFS</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="assets/css/app.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/plugins/jsonpresenter/jquery.jsonPresenter.css">
+    
+
+  </head>
+
+  <body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html"><small>Docs-Home</small></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link" href="ipfs-add-files.html">How To Add Files</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+
+      <div class="row">
+
+        <div class="col-lg-12">
+
+          <div class="card mt-4">
+            <div class="card-header">
+                IPFS files API
+             </div>
+            <div class="card-body">
+                <div class="bg-light">IPFS-API-HOST : https://ipfs1-api.horizontalsystems.xyz </div>
+                <div class="bg-light">IPFS-HOST : https://ipfs1.horizontalsystems.xyz </div>
+
+                <h5>1. Add files to IPFS</h5>
+                <p>To add files to IPFS first of all generate Uniq HASH from 12 words wallet secret. 
+                  Let it be "H1". Then add "H1" as "arg" parameter to Get request URL.</p>
+                <br>
+                <h6>Input: </h6>
+                <div class="alert alert-success">
+                  <strong>URL GET:</strong><b>{IPFS-API-HOST}</b>/api/v0/write?
+                </div>
+                <table class="table table-bordered">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>No</th>
+                            <th>Name</th>
+                            <th>Details</th>
+                       </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>1</td>
+                        <td>arg</td>
+                        <td>Path + File name to be added.</td>
+                      </tr>
+                      <tr>
+                        <td>2</td>
+                        <td>parents</td>
+                        <td>Create parent folders</td>
+                      </tr>
+                      <tr>
+                          <td>3</td>
+                          <td>create</td>
+                          <td>Create file if not exists</td>
+                      </tr>
+                    </tbody>
+                </table>
+                <h6>Output: </h6>
+                <div class="bg-light">HTTP Status : 200</div>
+                
+                <hr>
+                <hr>
+                <h5>2. Get Hash of the IPFS folder </h5>
+                <h>To read files from IPFS you should get the HASH of the parent folder. (H1)</h>
+                <br>
+                <h6>Input: </h6>
+                <div class="alert alert-success">
+                  <strong>URL:</strong> <b>{IPFS-API-HOST}</b>/api/v0/files/stat?
+                </div>
+                <table class="table table-bordered">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>No</th>
+                            <th>Name</th>
+                            <th>Details</th>
+                       </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>1</td>
+                        <td>arg</td>
+                        <td>Path of the files. (H1 generated from wallet secret) </td>
+                      </tr>
+                    </tbody>
+                </table>
+                <h6>Output: </h6>
+                <div class="bg-light" id="json-container"></div>
+                <hr>
+                <hr>
+                <h5>3. Read data from IPFS using HASH </h5>
+                <h>To read files from IPFS you should get the HASH of the parent folder. (H1)</h>
+                <br>
+                <h6>Input: </h6>
+                <div class="alert alert-success">
+                    <strong>URL:</strong> <b>{IPFS-HOST}</b>/ipfs/{HASH_OF_THE_FOLDER}/
+                </div>
+                <table class="table table-bordered">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>No</th>
+                            <th>Name</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>HASH_OF_THE_FOLDER</td>
+                            <td>Hash of the folder get from API: files/stat</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h6>Output: </h6>
+                <div class="bg-light">HTTP Status: 200</div>
+                <div class="bg-light">File list</div>
+            </div>
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col-lg-9 -->
+      </div>
+
+    </div>
+    <!-- /.container -->
+    
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="assets/plugins/jquery/jquery.min.js"/></script>
+    <script src="assets/plugins/bootstrap/js/bootstrap.bundle.min.js"/></script>
+    <script src="assets/plugins/jsonpresenter/jquery.jsonPresenter.js"></script>
+    <script type="text/javascript">
+    
+    $('#json-container').jsonPresenter({
+    json: {"Hash":"QmdnSnssag2ZrSYMdrr6pLZF4cRjp4c8yX7TDNEwkprKK8","Size":0,
+    "CumulativeSize":1507,"Blocks":3,"Type":"directory"}, // JSON objects here
+    })
+    
+    $('#json-container2').jsonPresenter({
+      json: {"Hash":"QmdnSnssag2ZrSYMdrr6pLZF4cRjp4c8yX7TDNEwkprKK8","Size":0,
+      "CumulativeSize":1507,"Blocks":3,"Type":"directory"}, // JSON objects here
+    })
+    </script>
+
+  </body>
+
+</html>
